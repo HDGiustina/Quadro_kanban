@@ -9,6 +9,8 @@
     --color-background: #f0f0f0;
     --color-text: #303030;
     --color-border: #d0d0d0;
+
+    --color-danger: #dc2626;
 }
 
 * {
