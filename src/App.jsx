@@ -1,19 +1,17 @@
 import './App.css'
 import { useTasks } from './context/context.jsx';
+import Card from './components/Card/Card.jsx';
 
 function App() {
   const { tasks } = useTasks();
 
   return (
     <>
-      <div>
+      <main className="app">
         {tasks.map(task => (
-          <div key={task.id}>
-            <h2>{task.title}</h2>
-            <p>{task.description}</p>
-          </div>
+           <Card key={task.id} task={task} />
         ))}
-      </div>
+      </main>     
     </>
   )
 }

@@ -1,0 +1,44 @@
+.card {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    width: 100%;
+    padding: 20px;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.card-status {
+    width: fit-content;
+    border-radius: 18px;
+    padding: 6px 12px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.card-info {
+}
+
+.infos {
+}
+
+.over {
+    background: #ff9a9a;
+    color: #a60000;
+    border: 1px solid #a60000;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin: 24px 0;
+}
+
+.card-actions {
+    display: flex;
+    gap: 15px;
+}
+

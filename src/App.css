@@ -1,0 +1,7 @@
+.app {
+    width: 100%;
+    min-height: 100vh;
+    padding: 24px;
+    background: var(--color-background);
+    color: var(--color-text);
+}

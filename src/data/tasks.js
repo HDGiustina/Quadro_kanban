@@ -28,5 +28,15 @@ export const Tasks = [
     created_at: '2025-12-06',
     completed_at: null,
     limit: '2025-12-19'
+  },
+  {
+    id: '4',
+    title: 'Responder e-mails',
+    description: 'Caixa de entrada zerada',
+    status: 'Em progresso',
+    responsible: { name: 'José', email: 'maria@email.com' },
+    created_at: '2025-12-01',
+    completed_at: null,
+    limit: '2025-12-10'
   }
 ];
