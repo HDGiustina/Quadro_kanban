@@ -16,6 +16,16 @@ function App() {
   return (
     <>
       <main className="app">
+        <section className='app-header'>
+          <h1>Kanban</h1>
+          <button 
+            className='btn-white add-task'
+          >
+            Adicionar tarefa
+          </button>
+        </section>
+
+        <section className='app-content'>
         {colunas.map((coluna) => (
           <Column 
             key={coluna} 
@@ -23,6 +33,7 @@ function App() {
             tasks={tasks.filter(task => task.status === coluna)} 
           />
         ))}
+        </section>
       </main>     
     </>
   )
