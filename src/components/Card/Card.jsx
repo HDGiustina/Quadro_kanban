@@ -1,34 +1,8 @@
+import { STATUS, STATUS_COLORS } from '../../constants/status'
 import './Card.css'
 
 function Card({ task, onEdit, onDelete }) {
-  const calcularAtraso = () => {
-    if (!task.limit) return 0
-    
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    
-    const limit = new Date(task.limit)
-    limit.setHours(0, 0, 0, 0)
-    
-    const diffTime = today - limit
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    
-    return diffDays > 0 ? diffDays : 0
-  }
-
-  const getStatusColor = (status) => {
-    const statusColors = {
-      'A Fazer': 'var(--color-success)',
-      'Em progresso': 'var(--color-warning)',
-      'Concluído': 'var(--color-danger)'
-    }
-
-    return statusColors[status]
-  }
-
-
-  const atraso = calcularAtraso()
-  const over = atraso > 0 && task.status !== 'Concluído'
+  const isAtrasado = task.status === STATUS.ATRASADO && task.dias_atrasado > 0
 
   return (
     <div className="card">
@@ -40,17 +14,16 @@ function Card({ task, onEdit, onDelete }) {
 
         <span 
           className="card-status"
-          style={{ backgroundColor: getStatusColor(task.status) }}
+          style={{ backgroundColor: STATUS_COLORS[task.status] }}
         >
           {task.status}
         </span>
       </section>
 
-
       <section className="card-info">
         <div className="infos">
           Responsável: 
-          <span >
+          <span>
             {task.responsible.name}
           </span>
         </div>
@@ -62,11 +35,11 @@ function Card({ task, onEdit, onDelete }) {
           </span>
         </div>
 
-        {over && (
+        {isAtrasado && (
           <div className="over">
             Atrasado há 
             <span >
-              {' ' + atraso} dia{atraso !== 1 ? 's' : ''}
+              {' ' + task.dias_atrasado} dia{task.dias_atrasado !== 1 ? 's' : ''}
             </span>
           </div>
         )}

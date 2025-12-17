@@ -1,0 +1,32 @@
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 400px;
+    min-width: 400px;
+    border: 3px solid var(--color-secondary);
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.column-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 100%;
+    background: #e3e3e3;
+    color: #989898;
+    padding: 12px 18px;
+    border-radius: 8px;
+}
+
+.column-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    
+    border-radius: 8px;
+    padding: 16px;
+    height: 100%;
+}

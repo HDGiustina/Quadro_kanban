@@ -1,15 +1,27 @@
 import './App.css'
 import { useTasks } from './context/context.jsx';
-import Card from './components/Card/Card.jsx';
+import { STATUS } from './constants/status'
+import Column from './components/Column/Column.jsx';
 
 function App() {
   const { tasks } = useTasks();
 
+  const colunas = [
+    STATUS.A_FAZER,
+    STATUS.EM_PROGRESSO,
+    STATUS.ATRASADO,
+    STATUS.CONCLUIDO
+  ]
+
   return (
     <>
       <main className="app">
-        {tasks.map(task => (
-           <Card key={task.id} task={task} />
+        {colunas.map((coluna) => (
+          <Column 
+            key={coluna} 
+            title={coluna} 
+            tasks={tasks.filter(task => task.status === coluna)} 
+          />
         ))}
       </main>     
     </>

@@ -7,7 +7,8 @@ export const Tasks = [
     responsible: { name: 'João', email: 'joao@email.com' },
     created_at: '2025-12-01',
     completed_at: null,
-    limit: '2025-12-20'
+    limit: '2025-12-20',
+    dias_atrasado: 0
   },
   {
     id: '2',
@@ -17,7 +18,8 @@ export const Tasks = [
     responsible: { name: 'Maria', email: 'maria@email.com' },
     created_at: '2025-12-06',
     completed_at: null,
-    limit: '2025-12-21'
+    limit: '2025-12-21',
+    dias_atrasado: 0
   },
   {
     id: '3',
@@ -27,16 +29,18 @@ export const Tasks = [
     responsible: { name: 'Maria', email: 'maria@email.com' },
     created_at: '2025-12-06',
     completed_at: null,
-    limit: '2025-12-19'
+    limit: '2025-12-19',
+    dias_atrasado: 0
   },
   {
     id: '4',
     title: 'Responder e-mails',
     description: 'Caixa de entrada zerada',
-    status: 'Em progresso',
-    responsible: { name: 'José', email: 'maria@email.com' },
+    status: 'Atrasado',
+    responsible: { name: 'José', email: 'jose@email.com' },
     created_at: '2025-12-01',
     completed_at: null,
-    limit: '2025-12-10'
+    limit: '2025-12-10',
+    dias_atrasado: 7
   }
 ];

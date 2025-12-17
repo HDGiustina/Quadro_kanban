@@ -4,4 +4,7 @@
     padding: 24px;
     background: var(--color-background);
     color: var(--color-text);
+    display: flex;
+    gap: 20px;
+    overflow-x: scroll;
 }
