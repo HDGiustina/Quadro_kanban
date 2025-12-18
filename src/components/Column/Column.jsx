@@ -1,7 +1,7 @@
 import Card from '../Card/Card'
 import './Column.css'
 
-function Column({ title, tasks, onEdit }) {
+function Column({ title, tasks, onEdit, onDelete }) {
 
   return (
     <section className="column">
@@ -16,6 +16,7 @@ function Column({ title, tasks, onEdit }) {
               key={task.id} 
               task={task}
               onEdit={onEdit}
+              onDelete={onDelete}
             />
           ))
         ) : (

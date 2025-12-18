@@ -157,3 +157,32 @@
     cursor: pointer;
     font-family: inherit;
 }
+
+.modal-delete {
+    max-width: 400px;
+}
+
+.modal-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-content h2 {
+    color: var(--color-text);
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.modal-content p {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.modal-delete .modal-actions {
+    padding: 0 24px 24px;
+}

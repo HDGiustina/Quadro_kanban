@@ -5,12 +5,15 @@ import { STATUS } from './constants/status'
 import Column from './components/Column/Column.jsx';
 import ModalCriar from './components/Modais/Criar.jsx'
 import ModalEditar from './components/Modais/Editar.jsx'
+import ModalDeletar from './components/Modais/Deletar.jsx'
 
 function App() {
-  const { tasks } = useTasks();
+  const { tasks, deleteTask } = useTasks();
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [taskToEdit, setTaskToEdit] = useState(null)
+  const [taskToDelete, setTaskToDelete] = useState(null)
 
   const colunas = [
     STATUS.A_FAZER,
@@ -19,9 +22,18 @@ function App() {
     STATUS.CONCLUIDO
   ]
 
-  const edit = (task) => {
+  const handleEdit = (task) => {
     setTaskToEdit(task)
     setIsEditModalOpen(true)
+  }
+
+  const handleDeleteClick = (task) => {
+    setTaskToDelete(task)
+    setIsDeleteModalOpen(true)
+  }
+
+  const handleConfirmDelete = (taskId) => {
+    deleteTask(taskId)
   }
 
   return (
@@ -43,7 +55,8 @@ function App() {
             key={coluna} 
             title={coluna} 
             tasks={tasks.filter(task => task.status === coluna)}
-            onEdit={edit}
+            onEdit={handleEdit}
+            onDelete={handleDeleteClick}
           />
         ))}
         </section>
@@ -58,6 +71,13 @@ function App() {
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         task={taskToEdit}
+      />
+
+      <ModalDeletar 
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+        task={taskToDelete}
       />
     </>
   )

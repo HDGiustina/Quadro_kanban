@@ -53,7 +53,7 @@ function Card({ task, onEdit, onDelete }) {
           Editar
         </button>
         <button 
-          onClick={() => onDelete(task.id)}
+          onClick={() => onDelete(task)}
           className='btn-cancel'
         >
           Deletar
