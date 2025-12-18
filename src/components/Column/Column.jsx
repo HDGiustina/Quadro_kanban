@@ -1,24 +1,35 @@
 import Card from '../Card/Card'
 import './Column.css'
+import { useDroppable } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
-function Column({ title, tasks, onEdit, onDelete }) {
+function Column({ title, tasks, onEdit, onDelete, columnId }) {
+  const { setNodeRef, isOver } = useDroppable({
+    id: columnId
+  })
+
+  const sortedTasks = [...tasks].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
 
   return (
-    <section className="column">
+    <section className="column" ref={setNodeRef} style={{
+      backgroundColor: isOver ? 'rgba(245, 148, 139, 0.1)' : 'transparent'
+    }}>
       <div className="column-header">
         <h1>{title}</h1>
       </div>
 
       <div className="column-content">
-        {tasks.length > 0 ? (
-          tasks.map(task => (
-            <Card 
-              key={task.id} 
-              task={task}
-              onEdit={onEdit}
-              onDelete={onDelete}
-            />
-          ))
+        {sortedTasks.length > 0 ? (
+          <SortableContext items={sortedTasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
+            {sortedTasks.map(task => (
+              <Card 
+                key={task.id} 
+                task={task}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
+            ))}
+          </SortableContext>
         ) : (
           <div className="column-empty">
             Sem tarefas

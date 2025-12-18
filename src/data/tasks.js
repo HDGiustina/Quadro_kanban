@@ -8,7 +8,8 @@ export const Tasks = [
     created_at: '2025-12-01',
     completed_at: null,
     limit: '2025-12-20',
-    dias_atrasado: 0
+    dias_atrasado: 0,
+    order: 0
   },
   {
     id: '2',
@@ -19,7 +20,8 @@ export const Tasks = [
     created_at: '2025-12-06',
     completed_at: null,
     limit: '2025-12-21',
-    dias_atrasado: 0
+    dias_atrasado: 0,
+    order: 1
   },
   {
     id: '3',
@@ -30,7 +32,8 @@ export const Tasks = [
     created_at: '2025-12-06',
     completed_at: null,
     limit: '2025-12-19',
-    dias_atrasado: 0
+    dias_atrasado: 0,
+    order: 0
   },
   {
     id: '4',
@@ -41,6 +44,7 @@ export const Tasks = [
     created_at: '2025-12-01',
     completed_at: null,
     limit: '2025-12-10',
-    dias_atrasado: 7
+    dias_atrasado: 7,
+    order: 0
   }
 ];

@@ -5,7 +5,7 @@ import Snackbar from '../Snackbar/Snackbar'
 import './Modal.css'
 
 function ModalEditar({ isOpen, onClose, task }) {
-    const { updateTask } = useTasks()
+    const { updateTask, validateStatusChange } = useTasks()
     const [errors, setErrors] = useState({})
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [snackbarMessage, setSnackbarMessage] = useState('')
@@ -88,20 +88,9 @@ function ModalEditar({ isOpen, onClose, task }) {
         const statusMudou = task.status !== formData.status
 
         if (statusMudou) {
-            if (formData.status === STATUS.ATRASADO && task.status !== STATUS.ATRASADO) {
-                const today = new Date()
-                today.setHours(0, 0, 0, 0)
-                const limitDate = new Date(formData.limit)
-
-                if (limitDate >= today) {
-                    setSnackbarMessage('A tarefa ainda não está atrasada.')
-                    setSnackbarOpen(true)
-                    return false
-                }
-            }
-
-            if (task.status === STATUS.ATRASADO && formData.status !== STATUS.CONCLUIDO) {
-                setSnackbarMessage('Tarefa ainda está atrasada. Conclua a tarefa para alterar o status.')
+            const validation = validateStatusChange(task, formData.status)
+            if (!validation.isValid) {
+                setSnackbarMessage(validation.message)
                 setSnackbarOpen(true)
                 return false
             }

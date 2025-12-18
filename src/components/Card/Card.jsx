@@ -1,11 +1,28 @@
 import { STATUS, STATUS_COLORS } from '../../constants/status'
 import './Card.css'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
-function Card({ task, onEdit, onDelete }) {
+function Card({ task, onEdit, onDelete, hideActions = false, isDragOverlay = false }) {
   const isAtrasado = task.status === STATUS.ATRASADO && task.dias_atrasado > 0
+  const { attributes, listeners, setNodeRef, isDragging, transform, transition } = useSortable({
+    id: task.id,
+    disabled: isDragOverlay
+  })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition
+  }
 
   return (
-    <div className="card">
+    <div 
+      ref={setNodeRef}
+      {...(!isDragOverlay ? listeners : {})}
+      {...(!isDragOverlay ? attributes : {})}
+      style={style}
+      className={`card ${isDragging && !isDragOverlay ? 'dragging' : ''} ${isDragOverlay ? 'card-overlay' : ''}`}
+    >
       <section className="card-header">
         <div>
           <h1>{task.title}</h1>
@@ -45,20 +62,22 @@ function Card({ task, onEdit, onDelete }) {
         )}
       </section>
 
-      <section className="card-actions">
-        <button 
-          onClick={() => onEdit(task)}
-          className='btn-primary'
-        >
-          Editar
-        </button>
-        <button 
-          onClick={() => onDelete(task)}
-          className='btn-cancel'
-        >
-          Deletar
-        </button>
-      </section>
+      {!hideActions && (
+        <section className="card-actions">
+          <button 
+            onClick={() => onEdit(task)}
+            className='btn-primary'
+          >
+            Editar
+          </button>
+          <button 
+            onClick={() => onDelete(task)}
+            className='btn-cancel'
+          >
+            Deletar
+          </button>
+        </section>
+      )}
     </div>
   )
 }
