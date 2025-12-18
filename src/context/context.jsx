@@ -23,12 +23,36 @@ export function TaskProvider({ children }) {
         });
     };
 
-    // const updateTask
+    const updateTask = (id, update) => {
+        setTasks(prev => 
+            prev.map(task => 
+                task.id === id 
+                    ? atualizarStatusEAtraso({
+                        ...task,
+                        ...update,
+                    })
+                    : task
+            )
+        );
+    };
+
     // const deleteTask
-    // const changeStatus
+
+    const changeStatus = (id, newStatus) => {
+        setTasks(prev =>
+            prev.map(task =>
+                task.id === id
+                    ? atualizarStatusEAtraso({
+                        ...task,
+                        status: newStatus
+                    })
+                    : task
+            )
+        );
+    };
 
     return (
-        <Context.Provider value={{ tasks, addTask }}>
+        <Context.Provider value={{ tasks, addTask, updateTask, changeStatus }}>
             {children}
         </Context.Provider>
     );

@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTasks } from '../../context/context'
 import { STATUS } from '../../constants/status'
 import './Modal.css'
 
-function ModalCriar({ isOpen, onClose }) {
-    const { addTask } = useTasks()
+function ModalEditar({ isOpen, onClose, task }) {
+    const { updateTask } = useTasks()
     const [errors, setErrors] = useState({})
     const [formData, setFormData] = useState({
         title: '',
@@ -13,6 +13,21 @@ function ModalCriar({ isOpen, onClose }) {
         limit: '',
         status: STATUS.A_FAZER
     })
+
+    useEffect(() => {
+        if (task && isOpen) {
+            setFormData({
+                title: task.title,
+                description: task.description,
+                responsible: {
+                    name: task.responsible.name,
+                    email: task.responsible.email
+                },
+                limit: task.limit,
+                status: task.status
+            })
+        }
+    }, [task, isOpen])
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -32,6 +47,14 @@ function ModalCriar({ isOpen, onClose }) {
                 [name]: value
             }))
         }
+    }
+
+    const handleStatusChange = (e) => {
+        const newStatus = e.target.value
+        setFormData(prev => ({
+            ...prev,
+            status: newStatus
+        }))
     }
 
     const validate = () => {
@@ -70,7 +93,7 @@ function ModalCriar({ isOpen, onClose }) {
             return
         }
 
-        addTask(formData)
+        updateTask(task.id, formData)
 
         setFormData({
             title: '',
@@ -95,13 +118,13 @@ function ModalCriar({ isOpen, onClose }) {
         onClose()
     }
 
-    if (!isOpen) return null
+    if (!isOpen || !task) return null
 
     return (
         <div className="modal-overlay" onClick={close}>
             <section className="modal-container" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
-                    <h2>Criar Nova Tarefa</h2>
+                    <h2>Editar Tarefa</h2>
                     <button className="modal-close" onClick={close}>
                         ✕
                     </button>
@@ -166,17 +189,34 @@ function ModalCriar({ isOpen, onClose }) {
                         </div>
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="limit">Data Limite *</label>
-                        <input
-                            id="limit"
-                            type="date"
-                            name="limit"
-                            value={formData.limit}
-                            onChange={handleInputChange}
-                            className={errors.limit ? 'input-error' : ''}
-                        />
-                        {errors.limit && <span className="error-message">{errors.limit}</span>}
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label htmlFor="limit">Data Limite *</label>
+                            <input
+                                id="limit"
+                                type="date"
+                                name="limit"
+                                value={formData.limit}
+                                onChange={handleInputChange}
+                                className={errors.limit ? 'input-error' : ''}
+                            />
+                            {errors.limit && <span className="error-message">{errors.limit}</span>}
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="status">Status *</label>
+                            <select
+                                id="status"
+                                name="status"
+                                value={formData.status}
+                                onChange={handleStatusChange}
+                            >
+                                <option value={STATUS.A_FAZER}>{STATUS.A_FAZER}</option>
+                                <option value={STATUS.EM_PROGRESSO}>{STATUS.EM_PROGRESSO}</option>
+                                <option value={STATUS.CONCLUIDO}>{STATUS.CONCLUIDO}</option>
+                                <option value={STATUS.ATRASADO}>{STATUS.ATRASADO}</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="modal-actions">
@@ -184,7 +224,7 @@ function ModalCriar({ isOpen, onClose }) {
                             Cancelar
                         </button>
                         <button type="submit" className="btn-primary">
-                            Criar Tarefa
+                            Salvar Alterações
                         </button>
                     </div>
                 </form>
@@ -193,4 +233,4 @@ function ModalCriar({ isOpen, onClose }) {
     )
 }
 
-export default ModalCriar
+export default ModalEditar
