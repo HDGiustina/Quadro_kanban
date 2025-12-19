@@ -14,7 +14,7 @@ function Dashboard() {
             <h2>Dashboard</h2>
 
             <div className="cards">
-                <div className="card">
+                <div className="card" style={{ cursor: 'default' }} >
                     <h3>Tarefas por status</h3>
                     <ul>
                         {Object.keys(counts).map(status => (
@@ -25,13 +25,13 @@ function Dashboard() {
                     </ul>
                 </div>
 
-                <div className="card">
+                <div className="card" style={{ cursor: 'default' }}>
                     <h3>% Concluídas</h3>
                     <p>Hoje: {completedToday}%</p>
                     <p>Últimos 7 dias: {completedWeek}%</p>
                 </div>
 
-                <div className="card">
+                <div className="card" style={{ cursor: 'default' }}>
                     <h3>Tempo médio até conclusão</h3>
                     <p>{avgDays != null ? `${avgDays} dia(s)` : '—'}</p>
                 </div>
