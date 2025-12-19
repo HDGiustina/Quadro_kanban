@@ -31,21 +31,25 @@
 .card-header {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 10px;
     color: var(--color-text);
 }
 
 .card-header h1 {
-    font-size: 1.7em;
+    font-size: 1em;
+}
+.card-header p {
+    font-size: 0.9em;
 }
 
 .card-status {
     width: fit-content;
-    border-radius: 18px;
+    border-radius: 12px;
     padding: 6px 12px;
     color: #fff;
     font-weight: bold;
+    font-size: 0.9em;
 }
 
 .card-info {
@@ -55,6 +59,7 @@
 .infos {
     display: flex;
     gap: 4px;
+    font-size: 0.9em;
 }
 
 .over {
@@ -62,16 +67,17 @@
     color: #a60000;
     border: 1px solid #a60000;
     border-radius: 12px;
-    padding: 12px;
+    padding: 10px;
     font-weight: bold;
     text-align: center;
-    margin: 24px 0 0;
+    margin: 12px 0 0;
+    font-size: 0.9em;
 }
 
 .card-actions {
     display: flex;
     gap: 15px;
-    margin: 24px 0 0;
+    margin: 12px 0 0;
 }
 
 @media (max-width: 640px) {

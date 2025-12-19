@@ -1,13 +1,13 @@
 .column {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 8px;
     width: 100%;
-    min-width: 320px;
+    min-width: 290px;
     height: 100%;
     border: 3px solid var(--color-secondary);
     border-radius: 8px;
-    padding: 24px;
+    padding: 12px;
     overflow: hidden;
     transition: all 0.2s ease;
 }
@@ -21,7 +21,7 @@
     overflow-y: auto;
     background: #e3e3e3;
     color: #989898;
-    padding: 12px 18px;
+    padding: 12px;
     border-radius: 8px;
     transition: all 0.2s ease;
 }
@@ -47,13 +47,19 @@
     gap: 12px;
 }
 
+.column-header h1 {
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0;
+}
+
 .wip-indicator {
     margin-left: auto;
     background: #0000000f;
-    padding: 6px 10px;
+    padding: 6px 8px;
     border-radius: 12px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .wip-indicator.over {
@@ -62,12 +68,6 @@
 }
 
 @media (max-width: 1024px) {
-    .column {
-        width: 320px;
-        min-width: 320px;
-        padding: 18px;
-    }
-
     .column-content {
         padding: 10px 14px;
     }
