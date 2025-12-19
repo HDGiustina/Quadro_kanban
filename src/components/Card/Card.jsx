@@ -52,6 +52,15 @@ function Card({ task, onEdit, onDelete, hideActions = false, isDragOverlay = fal
           </span>
         </div>
 
+        {task.completed_at && (
+          <div className="infos">
+            Concluído em:
+            <span>
+              {new Date(task.completed_at).toLocaleDateString('pt-BR')}
+            </span>
+          </div>
+        )}
+
         {isAtrasado && (
           <div className="over">
             Atrasado há 

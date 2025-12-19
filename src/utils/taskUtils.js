@@ -1,27 +1,37 @@
 import { STATUS } from '../constants/status'
 
 export const atualizarStatusEAtraso = (task) => {
-  if (!task.limit || task.status === STATUS.CONCLUIDO) {
-    return {
-      ...task,
-      dias_atrasado: 0
+  const result = { ...task };
+
+  if (result.status === STATUS.CONCLUIDO) {
+    result.dias_atrasado = 0
+    if (!result.completed_at) {
+      result.completed_at = new Date().toISOString().split('T')[0]
     }
+    return result
+  }
+
+  result.completed_at = null
+
+  if (!result.limit) {
+    result.dias_atrasado = 0
+    return result
   }
 
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  const limit = new Date(task.limit)
+  const limit = new Date(result.limit)
   limit.setHours(0, 0, 0, 0)
 
   const diffTime = today - limit
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
   const diasAtrasado = diffDays > 0 ? diffDays : 0
-  const novoStatus = diasAtrasado > 0 ? STATUS.ATRASADO : task.status
+  const novoStatus = diasAtrasado > 0 ? STATUS.ATRASADO : result.status
 
   return {
-    ...task,
+    ...result,
     status: novoStatus,
     dias_atrasado: diasAtrasado
   }
