@@ -65,12 +65,16 @@ function Card({ task, onEdit, onDelete, hideActions = false, isDragOverlay = fal
       {!hideActions && (
         <section className="card-actions">
           <button 
+            type="button"
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={() => onEdit(task)}
             className='btn-primary'
           >
             Editar
           </button>
           <button 
+            type="button"
+            onPointerDown={(e) => e.stopPropagation()}
             onClick={() => onDelete(task)}
             className='btn-cancel'
           >
