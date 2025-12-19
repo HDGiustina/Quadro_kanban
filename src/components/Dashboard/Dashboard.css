@@ -34,3 +34,14 @@
 .card li {
     margin-bottom: 6px;
 }
+
+@media (max-width: 640px) {
+    .cards {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .card {
+        min-width: 100%;
+    }
+}

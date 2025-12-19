@@ -186,3 +186,21 @@
 .modal-delete .modal-actions {
     padding: 0 24px 24px;
 }
+
+@media (max-width: 640px) {
+    .modal-container {
+        width: 95%;
+        max-width: 420px;
+        padding: 0;
+    }
+
+    .modal-form {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}

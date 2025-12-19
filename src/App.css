@@ -69,3 +69,40 @@
 .filters-bar .spacer {
     flex: 1;
 }
+
+@media (max-width: 1024px) {
+    .app {
+        padding: 16px;
+    }
+
+    .app-header h1 {
+        font-size: 28px;
+    }
+
+    .app-content {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 640px) {
+    .app {
+        padding: 12px;
+    }
+
+    .app-header {
+        padding: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .app-header h1 {
+        font-size: 20px;
+    }
+
+    .app-content {
+        flex-direction: column;
+        padding-bottom: 12px;
+        overflow: visible;
+    }
+}

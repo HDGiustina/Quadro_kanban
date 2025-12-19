@@ -2,9 +2,9 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    width: 400px;
-    min-width: 400px;
-    max-height: 100%;
+    width: 100%;
+    min-width: 320px;
+    height: 100%;
     border: 3px solid var(--color-secondary);
     border-radius: 8px;
     padding: 24px;
@@ -59,4 +59,28 @@
 .wip-indicator.over {
     color: var(--color-danger);
     background: #fecdd399;
+}
+
+@media (max-width: 1024px) {
+    .column {
+        width: 320px;
+        min-width: 320px;
+        padding: 18px;
+    }
+
+    .column-content {
+        padding: 10px 14px;
+    }
+}
+
+@media (max-width: 640px) {
+    .column {
+        width: 100%;
+        min-width: 100%;
+        padding: 14px;
+    }
+
+    .column-header {
+        gap: 8px;
+    }
 }
