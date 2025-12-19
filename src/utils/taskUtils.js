@@ -28,7 +28,12 @@ export const atualizarStatusEAtraso = (task) => {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
   const diasAtrasado = diffDays > 0 ? diffDays : 0
-  const novoStatus = diasAtrasado > 0 ? STATUS.ATRASADO : result.status
+  let novoStatus
+  if (diasAtrasado > 0) {
+    novoStatus = STATUS.ATRASADO
+  } else {
+    novoStatus = result.status === STATUS.ATRASADO ? STATUS.A_FAZER : result.status
+  }
 
   return {
     ...result,
