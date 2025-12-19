@@ -70,7 +70,11 @@ function ModalCriar({ isOpen, onClose }) {
             return
         }
 
-        addTask(formData)
+        const result = addTask(formData)
+        if (result && result.success === false) {
+            setErrors(prev => ({ ...prev, general: result.message }))
+            return
+        }
 
         setFormData({
             title: '',
@@ -108,6 +112,7 @@ function ModalCriar({ isOpen, onClose }) {
                 </div>
 
                 <form onSubmit={submit} className="modal-form">
+                    {errors.general && <div className="error-message">{errors.general}</div>}
                     <div className="form-group">
                         <label htmlFor="title">Título *</label>
                         <input

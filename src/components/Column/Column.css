@@ -36,3 +36,27 @@
     padding: 16px;
     height: 100%;
 }
+
+.column.over-limit {
+    border-color: var(--color-danger);
+}
+
+.column-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.wip-indicator {
+    margin-left: auto;
+    background: #0000000f;
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.wip-indicator.over {
+    color: var(--color-danger);
+    background: #fecdd399;
+}

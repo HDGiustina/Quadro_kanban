@@ -8,6 +8,30 @@ const Context = createContext();
 export function TaskProvider({ children }) {
     const [tasks, setTasks] = useState(() => inicializarTasks(Tasks));
 
+    const DEFAULT_WIP_LIMITS = {
+        [STATUS.EM_PROGRESSO]: 2
+    };
+
+    const getWipLimit = (status) => DEFAULT_WIP_LIMITS[status] ?? null;
+
+    const getCountForStatus = (status) => tasks.filter(t => t.status === status).length;
+
+    const canAddToStatus = (status, excludeTaskId = null) => {
+        const limit = getWipLimit(status);
+
+        if (limit == null) {
+            return { isValid: true }
+        };
+
+        const count = tasks.filter(t => t.status === status && t.id !== excludeTaskId).length;
+
+        if (count >= limit) {
+            return { isValid: false, message: `Limite de tarefas atingido para '${status}' (${count}/${limit})` };
+        }
+
+        return { isValid: true };
+    };
+
     const validateStatusChange = (task, newStatus) => {
         if (task.status === newStatus) {
             return { isValid: true };
@@ -33,10 +57,23 @@ export function TaskProvider({ children }) {
             };
         }
 
+        const limit = getWipLimit(newStatus);
+        if (limit != null) {
+            const countInTarget = tasks.filter(t => t.status === newStatus).length;
+            if (countInTarget >= limit) {
+                return { isValid: false, message: `Limite de tarefas atingido para '${newStatus}' (${countInTarget}/${limit})` };
+            }
+        }
+
         return { isValid: true };
     };
 
     const addTask = (task) => {
+        const check = canAddToStatus(task.status);
+        if (!check.isValid) {
+            return { success: false, message: check.message };
+        }
+
         setTasks(prev => {
             const last = prev.length > 0 ? Math.max(...prev.map(t => Number(t.id))) : 0;
             
@@ -53,6 +90,8 @@ export function TaskProvider({ children }) {
 
             return [...prev, newTask];
         });
+
+        return { success: true };
     };
 
     const updateTask = (id, update) => {
@@ -156,7 +195,7 @@ export function TaskProvider({ children }) {
     };
 
     return (
-        <Context.Provider value={{ tasks, addTask, updateTask, deleteTask, changeStatus, validateStatusChange, reorderTasks, reorderTasksByArray, moveTaskToStatusAt }}>
+        <Context.Provider value={{ tasks, addTask, updateTask, deleteTask, changeStatus, validateStatusChange, reorderTasks, reorderTasksByArray, moveTaskToStatusAt, getWipLimit, getCountForStatus, canAddToStatus }}>
             {children}
         </Context.Provider>
     );
