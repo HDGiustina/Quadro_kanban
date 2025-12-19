@@ -14,8 +14,6 @@ function Column({ title, tasks, onEdit, onDelete, columnId }) {
   const limit = getWipLimit(title)
   const count = tasks.length
 
-  const sortedTasks = [...tasks].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-
   return (
     <section className={`column ${limit != null && count > limit ? 'over-limit' : ''}`} ref={setNodeRef} style={{
       backgroundColor: isOver ? 'rgba(245, 148, 139, 0.1)' : 'transparent'
@@ -30,12 +28,12 @@ function Column({ title, tasks, onEdit, onDelete, columnId }) {
       </div>
 
       <div className="column-content">
-        {sortedTasks.length > 0 ? (
-          <SortableContext items={sortedTasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
-            {sortedTasks.map(task => (
+        {tasks.length > 0 ? (
+          <SortableContext items={tasks.map(taskItem => taskItem.id)} strategy={verticalListSortingStrategy}>
+            {tasks.map(taskItem => (
               <Card 
-                key={task.id} 
-                task={task}
+                key={taskItem.id} 
+                task={taskItem}
                 onEdit={onEdit}
                 onDelete={onDelete}
               />

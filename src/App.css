@@ -37,3 +37,35 @@
     padding: 0 0 24px;
     flex: 1;
 }
+
+.filters-bar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: var(--color-secondary);
+    color: white;
+}
+
+.filters-bar .filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filters-bar label {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.filters-bar select,
+.filters-bar input {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.12);
+}
+
+.filters-bar .spacer {
+    flex: 1;
+}

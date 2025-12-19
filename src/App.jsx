@@ -11,7 +11,7 @@ import Snackbar from './components/Snackbar/Snackbar.jsx'
 import { DndContext, DragOverlay, pointerWithin } from '@dnd-kit/core'
 
 function App() {
-  const { tasks, deleteTask, updateTask, validateStatusChange, reorderTasksByArray, moveTaskToStatusAt } = useTasks();
+  const { tasks, deleteTask, updateTask, validateStatusChange, reorderTasksByArray, moveTaskToStatusAt, getTasksView } = useTasks();
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -20,6 +20,10 @@ function App() {
   const [activeId, setActiveId] = useState(null)
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [statusFilter, setStatusFilter] = useState('All')
+  const [responsibleFilter, setResponsibleFilter] = useState('All')
+  const [query, setQuery] = useState('')
+  const [sortOrder, setSortOrder] = useState('none') 
 
   const colunas = [
     STATUS.A_FAZER,
@@ -27,6 +31,10 @@ function App() {
     STATUS.ATRASADO,
     STATUS.CONCLUIDO
   ]
+
+  const visibleColumns = statusFilter === 'All' ? colunas : [statusFilter]
+
+  const responsibles = Array.from(new Set(tasks.map(taskItem => taskItem.responsible?.name).filter(Boolean)))
 
   const handleEdit = (task) => {
     setTaskToEdit(task)
@@ -86,6 +94,8 @@ function App() {
             
             const reorderedIds = newArray.map(t => t.id)
             reorderTasksByArray(reorderedIds, task.status)
+            // user manually reordered -> clear sort preference
+            setSortOrder('none')
           }
         } 
         else {
@@ -101,6 +111,8 @@ function App() {
           const insertIndex = tasksInTarget.findIndex(t => t.id === overTask.id)
 
           moveTaskToStatusAt(taskId, overTask.status, insertIndex)
+          // user moved and placed explicitly -> clear sort preference
+          setSortOrder('none')
         }
       }
     }
@@ -127,12 +139,50 @@ function App() {
             </button>
           </section>
 
+          <section className="filters-bar">
+            <div className="filter-item">
+              <label>Status</label>
+              <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                <option value="All">Todos</option>
+                {colunas.map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="filter-item">
+              <label>Responsável</label>
+              <select value={responsibleFilter} onChange={(e) => setResponsibleFilter(e.target.value)}>
+                <option value="All">Todos</option>
+                {responsibles.map(r => (
+                  <option key={r} value={r}>{r}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="filter-item" style={{minWidth: 260}}>
+              <label>Busca (Título / Descrição)</label>
+              <input placeholder="Buscar..." value={query} onChange={(e) => setQuery(e.target.value)} />
+            </div>
+
+            <div className="filter-item">
+              <label>Ordenar por data de criação</label>
+              <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                <option value="none">Sem ordenação</option>
+                <option value="asc">Mais antigas primeiro</option>
+                <option value="desc">Mais novas primeiro</option>
+              </select>
+            </div>
+
+            <div className="spacer" />
+          </section>
+
           <section className='app-content'>
-          {colunas.map((coluna) => (
+          {visibleColumns.map((coluna) => (
             <Column 
               key={coluna} 
               title={coluna} 
-              tasks={tasks.filter(task => task.status === coluna)}
+              tasks={getTasksView({ status: coluna, responsible: responsibleFilter, query, sortOrder })}
               onEdit={handleEdit}
               onDelete={handleDeleteClick}
               columnId={coluna}

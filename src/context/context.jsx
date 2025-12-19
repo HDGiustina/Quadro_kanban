@@ -32,6 +32,45 @@ export function TaskProvider({ children }) {
         return { isValid: true };
     };
 
+    const getTasksView = ({ status = null, responsible = 'All', query = '', sortOrder = 'none' } = {}) => {
+        let res = tasks
+
+        if (status) {
+            res = res.filter(t => t.status === status)
+        }
+
+        if (responsible && responsible !== 'All') {
+            res = res.filter(t => t.responsible?.name === responsible)
+        }
+
+        if (query && query.trim()) {
+            const q = query.toLowerCase()
+            res = res.filter(t => (t.title || '').toLowerCase().includes(q) || (t.description || '').toLowerCase().includes(q))
+        }
+
+        if (sortOrder && sortOrder !== 'none') {
+            return [...res].sort((a, b) => {
+                const dateA = a.created_at || ''
+                const dateB = b.created_at || ''
+
+                const timeA = new Date(dateA).getTime()
+                const timeB = new Date(dateB).getTime()
+
+                if (isNaN(timeA) || isNaN(timeB)) {
+                    return 0
+                }
+
+                if (sortOrder === 'asc') {
+                    return timeA - timeB
+                }
+
+                return timeB - timeA
+            })
+        }
+
+        return [...res].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    }
+
     const validateStatusChange = (task, newStatus) => {
         if (task.status === newStatus) {
             return { isValid: true };
@@ -195,7 +234,7 @@ export function TaskProvider({ children }) {
     };
 
     return (
-        <Context.Provider value={{ tasks, addTask, updateTask, deleteTask, changeStatus, validateStatusChange, reorderTasks, reorderTasksByArray, moveTaskToStatusAt, getWipLimit, getCountForStatus, canAddToStatus }}>
+        <Context.Provider value={{ tasks, addTask, updateTask, deleteTask, changeStatus, validateStatusChange, reorderTasks, reorderTasksByArray, moveTaskToStatusAt, getWipLimit, getCountForStatus, canAddToStatus, getTasksView }}>
             {children}
         </Context.Provider>
     );
