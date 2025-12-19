@@ -26,7 +26,7 @@
     overflow: hidden;
 }
 
-button {
+button, a.btn-primary, a.btn-cancel, a.btn-white {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.5em 1em;
@@ -37,9 +37,12 @@ button {
   transition: all 0.3s;
   width: 100%;
   font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  min-width: fit-content;
 }
-button:focus,
-button:focus-visible {
+button:focus, a.btn-primary:focus, a.btn-cancel:focus, a.btn-white:focus,
+button:focus-visible, a.btn-primary:focus-visible, a.btn-cancel:focus-visible, a.btn-white:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
@@ -50,17 +53,26 @@ button.btn-primary {
 button.btn-primary:hover {
   background-color: var(--color-primary-op);
 }
+
+button.btn-secondary {
+  background-color: var(--color-secondary);
+  color: #fff;
+}
+button.btn-secondary:hover {
+  background-color: var(--color-secondary-op);
+}
+
 button.btn-cancel {
   background-color: var(--color-cancel);
   color: #fff;
 }
 
-button.btn-white {
+button.btn-white, a.btn-white {
   background-color: #fff;
   color: var(--color-text);
 }
 
-button.btn-white:hover {
+button.btn-white:hover, a.btn-white:hover {
   background-color: #e8e8e8;
 }
 

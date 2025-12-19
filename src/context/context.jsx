@@ -71,6 +71,47 @@ export function TaskProvider({ children }) {
         return [...res].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     }
 
+    const getCountsByStatus = () => {
+        const counts = {}
+        Object.values(STATUS).forEach(s => {
+            counts[s] = tasks.filter(t => t.status === s).length
+        })
+        return counts
+    }
+
+    const getCompletionPercent = (period = 'day') => {
+        const now = new Date()
+        let from
+        if (period === 'day') {
+            from = new Date(now)
+            from.setDate(now.getDate() - 1)
+        } else if (period === 'week') {
+            from = new Date(now)
+            from.setDate(now.getDate() - 7)
+        } else {
+            from = new Date(0)
+        }
+
+        const completedInPeriod = tasks.filter(t => t.completed_at && new Date(t.completed_at) >= from).length
+        const total = tasks.length || 1
+        return Math.round((completedInPeriod / total) * 100)
+    }
+
+    const getAverageTimeToCompletion = () => {
+        const completed = tasks.filter(t => t.completed_at && t.created_at)
+        if (completed.length === 0) return null
+
+        const diffs = completed.map(t => {
+            const created = new Date(t.created_at)
+            const completedAt = new Date(t.completed_at)
+            const diffMs = completedAt - created
+            return diffMs / (1000 * 60 * 60 * 24)
+        })
+
+        const avg = diffs.reduce((a, b) => a + b, 0) / diffs.length
+        return Math.round(avg * 10) / 10
+    }
+
     const validateStatusChange = (task, newStatus) => {
         if (task.status === newStatus) {
             return { isValid: true };
@@ -234,7 +275,7 @@ export function TaskProvider({ children }) {
     };
 
     return (
-        <Context.Provider value={{ tasks, addTask, updateTask, deleteTask, changeStatus, validateStatusChange, reorderTasks, reorderTasksByArray, moveTaskToStatusAt, getWipLimit, getCountForStatus, canAddToStatus, getTasksView }}>
+        <Context.Provider value={{ tasks, addTask, updateTask, deleteTask, changeStatus, validateStatusChange, reorderTasks, reorderTasksByArray, moveTaskToStatusAt, getWipLimit, getCountForStatus, canAddToStatus, getTasksView, getCountsByStatus, getCompletionPercent, getAverageTimeToCompletion }}>
             {children}
         </Context.Provider>
     );

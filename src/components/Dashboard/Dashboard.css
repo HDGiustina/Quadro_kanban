@@ -1,0 +1,36 @@
+.dashboard {
+    padding: 20px;
+}
+
+.dashboard h2 {
+    margin: 0 0 12px 0;
+}
+
+.cards {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.card {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    min-width: 220px;
+    cursor: default;
+}
+
+.card h3 {
+    margin: 0 0 8px 0;
+}
+
+.card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.card li {
+    margin-bottom: 6px;
+}
